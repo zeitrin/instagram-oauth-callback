@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="referrer" content="no-referrer">
+  <title>Instagram OAuth Callback</title>
+</head>
+<body>
+  <h2>Instagram OAuth Callback</h2>
+  <p id="result">Waiting for authorization...</p>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const error = params.get("error");
+
+    // Remove sensitive query parameters from the address bar.
+    history.replaceState({}, "", window.location.pathname);
+
+    if (error) {
+      document.getElementById("result").textContent =
+        "Authorization failed: " + error;
+    } else if (code) {
+      // The authorization state must be validated before
+      // this code can be trusted or exchanged for a token.
+      document.getElementById("result").textContent =
+        "Authorization response received. State validation required.";
+    } else {
+      document.getElementById("result").textContent =
+        "Callback page is working.";
+    }
+  </script>
+</body>
+</html>
